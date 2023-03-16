@@ -76,6 +76,11 @@ public class PersonDemo {
 
         Map<String, List<Person>> peopleGroupBySurname = Stream.of(people, allChildren)
                 .flatMap(Collection::stream)
+                //w tym przypadku dla części nazwisk mamy po kilka osób
+                //robimy więc grupowanie osób po nazwisku i
+                //w mapie dla danego nazwiska tworzymy listę osób
+                //jeśli dla danego nazwiska występuje tylko jedna osoba to i tak
+                //tworzymy listę - jednoelementową
                 .collect(Collectors.groupingBy(each -> each.getSurname(), Collectors.toList()));
 
         peopleGroupBySurname.entrySet()
@@ -84,6 +89,11 @@ public class PersonDemo {
                     System.out.println("Klucz (nazwisko): " + each.getKey());
                     each.getValue().stream().forEach(val -> System.out.println("\t" + val.personInfo(false)));
                 });
+        grubaKrecha();
+        int someIntVal = 1;
+
+        System.out.println("Drukuję intVal:" + someIntVal);
+
     }
 
     private static void grubaKrecha() {
