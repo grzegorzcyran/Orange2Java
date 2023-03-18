@@ -2,6 +2,8 @@ package sda.orange.grcy.dirtyWeather;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -9,6 +11,8 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 public class WeatherGetApp {
@@ -71,11 +75,29 @@ public class WeatherGetApp {
 
                 var mapper = new ObjectMapper();
                 Map<String, Object> weatherResultMap = mapper.readValue(response.toString(),
-                        new TypeReference<Map<String, Object>>(){});
+                        new TypeReference<>(){});
 
                 System.out.println(weatherResultMap);
 
+                var currentWeatherDetails = weatherResultMap.get("Headline");
+                var forecast = weatherResultMap.get("DailyForecasts");
 
+                var currentWeatherDetailsMap = ((LinkedHashMap) currentWeatherDetails);
+                System.out.println("Aktualne warunki pogodowe");
+                currentWeatherDetailsMap.keySet()
+                        .forEach(key -> System.out.println(key + " : " + currentWeatherDetailsMap.get(key)));
+
+
+                @Setter
+                @Getter
+                class WeatherConditions {
+                    String description;
+                    String  temperature;
+                }
+
+                WeatherConditions conditions = new WeatherConditions();
+                conditions.description = currentWeatherDetailsMap.get("Text").toString();
+                System.out.println("Info z klasy; " + conditions.description);
             }
         } catch (MalformedURLException e) {
             throw new RuntimeException(e);
