@@ -1,11 +1,15 @@
 package sda.orange.grcy.dirtyWeather;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Map;
 
 public class WeatherGetApp {
 
@@ -23,10 +27,6 @@ public class WeatherGetApp {
          *  - jak macie pobrać nowe dane to wysyłacie żądanie URL i zapisujecie do obiektu pogody
          *  - jak macie wyświetlić to wyciągacie dane z obiektu pogody
          */
-
-
-
-
 
         try {
             URL obj = new URL(GET_URL);
@@ -68,6 +68,14 @@ public class WeatherGetApp {
                 }
                 reader.close();
                 System.out.println(response);
+
+                var mapper = new ObjectMapper();
+                Map<String, Object> weatherResultMap = mapper.readValue(response.toString(),
+                        new TypeReference<Map<String, Object>>(){});
+
+                System.out.println(weatherResultMap);
+
+
             }
         } catch (MalformedURLException e) {
             throw new RuntimeException(e);
