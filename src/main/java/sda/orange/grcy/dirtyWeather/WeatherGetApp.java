@@ -10,8 +10,24 @@ import java.net.URL;
 public class WeatherGetApp {
 
     private static final String GET_URL = "http://dataservice.accuweather.com/forecasts/v1/daily/1day/1-269508_1_AL" +
-            "?apikey=&details=true&metric=true";
+            "?apikey=LVz6RsCGYDwj1rJ6keYiNWU5KzLRg7KB&details=true&metric=true";
     public static void main(String[] args) {
+        /**
+         * Doróbcie pętlę w której będzie można "sterować programem":
+         *  - wciśnięcie 0 kończy program
+         *  - wciśnięcie 1 zaciąga nowe dane o pogodzie
+         *  - wciśnięcie 2 wyświetla informacje pogodowe na ekranie
+         *  Wszystkie powyższe akcje mają być przekazane do klasy kontrolera (z wyjątkiem 0)
+         *
+         * Doróbcie "kontrolera" który będzie reagował na "menu - akcje użytkownika"
+         *  - jak macie pobrać nowe dane to wysyłacie żądanie URL i zapisujecie do obiektu pogody
+         *  - jak macie wyświetlić to wyciągacie dane z obiektu pogody
+         */
+
+
+
+
+
         try {
             URL obj = new URL(GET_URL);
             HttpURLConnection conn = (HttpURLConnection) obj.openConnection();
