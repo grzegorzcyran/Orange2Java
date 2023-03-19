@@ -36,13 +36,42 @@ public class HibernateDemoApp {
         System.out.println("Podmieniamy model dla Kia na Stinger");
         try (var session = factory.openSession()) {
             Car kijanka = session.get(Car.class, 2);
+
+            /**
+             * beginTransaction i transaction.commit() są niezbędne
+             * żeby zmiany wprowadzone do bazy zostały w niej.
+             * jeśli nie zrobimy "commit'a" to po zakończeniu sesji
+             * (czyli po wyjściu z try-with-resources)
+             * zmiany zostaną usunięte z bazy
+             * i stan bazy będzie taki jak przed ich wprowadzeniem
+             *
+             * !!! UWAGA - można ustawić system tak że transakcje będą kończone automatycznie,
+             * w szczególności w SPRING'u albo innych frameworkach DI
+             */
             var transaction = session.beginTransaction();
             kijanka.setModel("Stinger");
             session.persist(kijanka);
             transaction.commit();
         }
 
-        System.out.println("Wylistujmy dane z bazy jeszcze raz:");
+        System.out.println("\nWylistujmy dane z bazy jeszcze raz:");
+        try (var session = factory.openSession()) {
+            List<Car> carsFromDb = session.createQuery("from Car", Car.class).list();
+            carsFromDb.forEach(each -> {
+                System.out.println("Samochód o id = " + each.getId());
+                System.out.println(each.getName() + " " + each.getModel() + "\n");
+            });
+        }
+
+        System.out.println("\nUsuniemy Mustanga");
+        try (var session = factory.openSession()) {
+            Car mustang = session.get(Car.class, 1);
+            var transaction = session.beginTransaction();
+            session.remove(mustang);
+            transaction.commit();
+        }
+
+        System.out.println("\nWylistujmy dane z bazy jeszcze raz po usunięciu mustanga:");
         try (var session = factory.openSession()) {
             List<Car> carsFromDb = session.createQuery("from Car", Car.class).list();
             carsFromDb.forEach(each -> {
