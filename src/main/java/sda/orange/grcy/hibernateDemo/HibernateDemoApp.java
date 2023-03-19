@@ -32,5 +32,23 @@ public class HibernateDemoApp {
                 System.out.println(each.getName() + " " + each.getModel() + "\n");
             });
         }
+
+        System.out.println("Podmieniamy model dla Kia na Stinger");
+        try (var session = factory.openSession()) {
+            Car kijanka = session.get(Car.class, 2);
+            var transaction = session.beginTransaction();
+            kijanka.setModel("Stinger");
+            session.persist(kijanka);
+            transaction.commit();
+        }
+
+        System.out.println("Wylistujmy dane z bazy jeszcze raz:");
+        try (var session = factory.openSession()) {
+            List<Car> carsFromDb = session.createQuery("from Car", Car.class).list();
+            carsFromDb.forEach(each -> {
+                System.out.println("Samochód o id = " + each.getId());
+                System.out.println(each.getName() + " " + each.getModel() + "\n");
+            });
+        }
     }
 }
