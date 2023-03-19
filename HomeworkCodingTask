@@ -1,0 +1,26 @@
+Napisać serwis RESTowy (to pojęcie ze Springa, będziecie mieć) który
+pozwala na zapisanie się do biblioteki, wypożyczanie książek, zwracanie ich,
+wyliczanie kwoty kary do zapłaty za nieterminowy zwrot
+
+Rozwiązanie ma uwzględniać:
+ - zapisywanie do bazy i odczyt z niej
+ - testy dla poszczególnych warstw rozwiązania
+ - dokumentację rozwiązania w pliku .md
+ - opis jak uruchomić rozwiązanie
+ - użycie Maven lub Gradle
+
+=====================================================
+To by się sprowadzało do napisania:
+ - encji dla książki
+ - encji dla biblioteki
+ - encji dla wypożyczającego
+
+ - Repository (pojęcie będzie wprowadzone szerzej na Springu) dla książek, biblioteki, pożyczającego
+ - warstwy logiki, czyli klas Service - dla biblioteki, ewentualnie dla wypożyczającego - zależnie od rozwiązania
+ - kontrolerów dla książek, biblioteki, pożyczającego
+
+ - testów dla logiki
+ - testów integracyjnych dla logiki i repozytorium
+ - testów integracyjnych dla logiki i kontrolerów
+
+ - pliku wykonywalnego .bat lub .sh do uruchomienia apki
