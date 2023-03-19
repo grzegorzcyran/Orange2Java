@@ -51,3 +51,26 @@ z ang. SLDC
    czyli sprawdzanie wydajności, wykonywanie update'ów oprogramowania
  - dopisywanie nowych funkcjonalności zamówionych przez klienta
    albo wymuszanych np. przez zmianę prawa
+
+Slajd 12 i dalej: praca z GIT'em
+ 1. Można pracować tylko z branchem master (albo main)
+    i commitować bezpośrednio zmiany na nim
+ 2. Można pracować z brachem master (main) i branchami
+    roboczymi które tworzymy z mastera (maina) i po
+    wykonaniu zmian robimy powrotne merge do mastera (maina)
+ 3. Można pracować z branchami np. master, test, develop
+    gdzie :
+     - branch develop jest do codziennej pracy
+     - programiści tworzą swoje branche robocze z develop'a
+       i po naniesieniu zmian merge'ują spowrotem do mastera
+     - branch test co jakiś czas jest aktualizowany
+       zawartością brancha develop - czyli merge develop -> test
+       i na tym branchu testują testerzy
+     - branch master jest co jakiś czas aktualizowany z testa
+       i na tym branchu testuje klient i z tego brancha
+       wykonujemy aktualizację środowiska produkcyjnego
+ 4. Definiujemy reguły przeglądu kodu - tak żeby jednak na
+    zmiany spojrzał ktoś jeszcze zanim trafią na branche master
+     / develop - zależnie od wybranego podejścia
+
+
